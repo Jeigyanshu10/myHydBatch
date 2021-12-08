@@ -1,0 +1,281 @@
+Exception Handling:
+Exception: 
+1. Written by a human
+2. Exceuted by human
+3. As human it pretty much excetable that we might run into trouble.
+
+1. When writing code in java sometime, things go well and sometime it doesn't. When such kind of situation arrives where things doesn't go as expected during such scenarios we need to provide an alternate course/path to our code to run successfully. The method/mechanism/process in which we handle such unforseen situation is called exception handling.
+
+2. int i =0;
+int j=10/i;
+
+public int divide(int i,int j){
+	System.out.println(i+j);
+	return i/j;// Risky code
+}
+
+className ref_variable = new classname();
+
+main(){
+	divide(10,2);//5
+	divide(10,0);
+	-
+	-
+	-
+	-
+}
+
+1. what is Exception.
+2. Exception handling.
+3. How does exception works in java
+4. Hirarchy of Exception
+5. Checked exception & Unchecked exception
+6. How to handle exception
+
+Risky code: Any piece of code which is expected or might give me an excpetion when executed is called risky code.
+
+Handling code: The piece of code that we provide as an alternative to the risky code situation is called as handling code.
+
+Clean Up code: The manadatory lines of codes that needs to be provided in order to save system resources is called clean up code.
+
+
+
+class ExceptionHandlingTest{
+		public static void main(String[] args){
+			manipulation(10,0);	
+		}
+public static int manipulation(int i, int j){
+		
+		return i/j;
+		if(j!=0){
+			return i/j;
+		}else
+		{
+			return "Please provide valid denominator";
+			return 0;
+		} 
+		
+	}
+}
+No CE
+
+How does exception works in java
+1. The jvm when encounters an exception it tries find any mechanism around the risky code to handle the situation.
+2. -If the JVM find the mechanism: It will execute it
+	- If the JVM doesn't find: It try to search this mechanism up in the call stack: if this available it will execute, if not then the main will create an object of the relevant exception and pass it to JVM
+3. JVM in return will pass it to default handler. The job of this default handler is to print the exception to the console.
+
+Note: JVM/Default handler will NEVER handle or provide any alternate course to the program.
+
+
+
+Hirerchy Of Exception:
+
+1. Throwable is the root class for the exception.
+2. It has 2 child classes
+	a. Exception: Have many child classes. For eg1
+		1. RuntimeExceptio: Have many child classes. For eg
+			a. ArithemticException
+			b. NullPointerException
+			c. ClassCastException
+			d. IndexOutOfBoundsException
+				1. ArrayIndexOutOfBoundsException
+				2. StringIndexOutOfBoundsException
+		2. IOException
+		3. InterruptedException
+		4. SQLException
+		.
+		.
+		.
+
+
+	b. Error: Also have a lot of child/sub classes.
+
+
+Exception: The group of code that we can protect by using some sort mechanism so that if there is an unforseen situation arrives at the run time we can provide alternate path/course are grouped togeather in Exception.
+
+Error: Error are the system related issues which the developer have absolute no control hence there is nothing much the developer can do about these issue but the JVM is smart enough to inform the executer about the system limitation so that the exectuioner can take further steps to overcome the issue. 
+
+
+
+2 Kinds of Exception:
+1. Checked Exception: The kind of exception which the compiler checks for the developer / programmer and force them to provide mechanisms to handle the possible exceptional situation is called checked exception.
+
+import java.io.*;
+
+class CheckedExceptionTest{
+	public static void main(String[] args){
+		PrintWriter pw = new PrintWriter("Anshu.txt");
+		pw.println("Hello Anshu!!");
+	}
+}
+
+
+
+
+
+2. Unchecked Exception: The kind of exception which are not caught by the compiler during the compilation are called as unchecked exception. The compiler NEVER force the programmer/developer to provide a mechanism to handle these situations.
+
+Note: The RuntimeException class, the child classes of RuntimeException, Error and the child classes of Error class are only unchecked exception and REST all of them are Checked exception
+
+
+
+How do we handle the exceptional situation:
+1. Basically there are 2 ways in which can handle any sort of exception.
+	a. surrounding our risky code around try-catch block.
+	b. using throws keyword to handle the situation.
+
+try: This a block inside which we need write the risky code.
+- We need to identify the risky code and put it inside the try block.
+- we cannot have a try block without a catch/finally block
+
+catch: This is the block where we need to mention the alternate path/course for the program in case an exception arises.
+
+- We cannot have a catch block without a try block
+
+finally: This is the block where we write all our clean up up code. 
+ - We cannot have finally block on its own it needs to have atleast a try block.
+
+No matter WHAT this block will always get a chance to execute if the control enters in the scope where it is defined.
+
+- This is optional
+
+throw: This is keyword which is used by the programmer to inform the JVM about a user defined exception.
+
+throws: This is a keyword which used to deligate the caller to handle the eception.
+
+syntax for try block:
+
+try{
+	//Risky code here
+}catch(ExceptionObject e){
+	//The alternate path/course or the handling code
+}finally{
+	//clean up code.
+}
+
+
+Eg1:
+
+class ExceptionHandlingTest{
+		public static void main(String[] args){
+			manipulation(10,0);	
+		}
+public static int manipulation(int i, int j){
+			try{
+				return i/j;
+			}catch(AritmeticException e){
+				System.exit(0);
+				return 0;
+		}finally{
+			return 10;
+			System.out.println("Hi! I am Jeigyanshu");
+		}
+	} 
+}
+
+No matter what the finally block is going execute before returing the control to the called method. The exception to this situation is only when JVM ecounters System.exit(0), where JVM will shut down with executing finally block.
+
+ Can we have multiple catch block for one try block: Yes we can have, while defining these catch block we need be careful for not
+ 	1. defining the same Exception Object multiple time.
+ 	2. The parent Exception object should defined towards the bottom.
+
+class ExceptionHandlingTest{
+		public static void main(String[] args){
+			manipulation(10,0);	
+		}
+public static int manipulation(int i, int j){
+			try{
+				
+				return i/j; ----> ArithmeticException 
+			}catch(AIOOBE e){
+				return 100;
+		}catch(ArithmeticException e){
+			retrun 20;
+		}catch(Exception e){	
+				return 50;
+		}finally{
+			System.out.println("Hi! I am Jeigyanshu");
+		}
+	} 
+}
+
+
+try{
+	-
+	-
+	-
+	-
+	- ---------> Exception
+	-
+	-
+	-
+	-
+	-
+	-
+}catch(Exception e){
+	-
+	-
+	-
+	-
+	-
+}finally{
+	-
+	-
+	-
+}
+
+
+
+ Is nested try-catch-finally is possible in java: Yes
+
+
+ class ExceptionHandlingTest{
+		public static void main(String[] args){
+			manipulation(10,0);	
+		}
+public static int manipulation(int i, int j){
+			try{//Outer try block
+				int add = i[1]+i[5];//does raise an exception
+					
+					try{//begining of inner try
+						return i/j; // ArithmeticExeption
+					}//end of inner try
+					catch(AIOOBE e){   ------ begining of inner catch
+						return 15;
+					  }//end of inner catch
+					  finally{
+							System.out.println("Inner finally block");
+					}
+				 
+			}//End of Outer try
+			catch(AIOOBE e){
+				return 100;
+				}
+				}
+		}catch(ArithmeticException e){
+			retrun 20;
+		}catch(Exception e){	
+				return 50;
+		}finally{
+			System.out.println("Hi! I am Jeigyanshu");
+		}
+	} 
+}
+Note: Can I use try catch to handle checked and unchecked exception? Yes.
+
+throws: This is a keyword which used to deligate the responsibilty of handling the exception to the caller method
+
+
+throw: Sometimes to meet our organization/programming requirement we have to raise an customized exception and inform the JVM about it. We can inform the JVM about this exception by using throw keyword.
+- As soon as I use the throw keyword it is exactly the same as the JVM raising an exception.
+
+Customized Exception:
+There are a lot methods inside Throwable class. But there is no methods inside the Exception class.
+
+
+Note 1: The JVM know when to raise arithmetic exception, nullpointer exception etc. because these are java defined exceptions and the jvm know whrn the relevant exception to be raised however, JVM doesn't know when to raise the user defined exception hence it is the responsibilty of the programmer to hand over the user defined exception to the JVM explicitly.
+
+Note 2: Customized exceptions are never handled because this is a situation where the programmer would not like to proceed with the rest of the execution because of the input provided by the user, hence he/she will throw this exception to the JVM who further will delicate it to the default exception handler to print the customized message to the console.
+
+Note 3: It is highly recommended that while defining our customized/user defined exception we need to extend it from the Runtime Exception, because if that is the case then the compiler will never expect us to handle the exception during the compilation and will allow the program to run.
