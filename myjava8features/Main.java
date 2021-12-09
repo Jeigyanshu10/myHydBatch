@@ -8,5 +8,6 @@ public class Main {
 			return "Hello " + name;
 		};
 		System.out.println(mi.greet("Bindu"));
+
 	}
 }
