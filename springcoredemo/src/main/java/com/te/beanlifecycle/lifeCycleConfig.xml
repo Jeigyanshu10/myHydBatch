@@ -13,6 +13,7 @@
    			<constructor-arg value="Aalu"/>
    </bean>
    
+   
    <bean class="com.te.beanlifecycle.Pepsi" name="pepsi">
    		<constructor-arg value="20"/>
    </bean>
