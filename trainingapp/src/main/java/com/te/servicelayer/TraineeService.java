@@ -1,24 +1,19 @@
 package com.te.servicelayer;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import com.te.daolayer.TraineeDAO;
 import com.te.dtolayer.Trainees;
-import com.te.mycustomexceptions.InvalidPasswordException;
 
-@Service
-public class TraineeService {
+public interface TraineeService {
+	public boolean addTrainee(Trainees trainee);
 
-	@Autowired
-	private TraineeDAO dao;
+	public Trainees getTrainee(int id);
 
-	public boolean addTrainee(Trainees trainee) {
-		if (trainee.getPassword().equals(trainee.getUsername())) {
-			throw new InvalidPasswordException("You cannot have same username and password");
-		}
-		return dao.insertTrainee(trainee);
+	public Trainees serviceAuthentication(int userId, String password);
 
-	}
+	public boolean deleteTrainee(int id);
 
+	public boolean updateTrainee(Trainees trainee);
+
+	public List<Trainees> getAllTrainees();
 }

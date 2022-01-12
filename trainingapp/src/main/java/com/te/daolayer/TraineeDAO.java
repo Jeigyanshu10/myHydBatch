@@ -1,35 +1,20 @@
 package com.te.daolayer;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
 import com.te.dtolayer.Trainees;
 
-@Repository
-public class TraineeDAO {
+public interface TraineeDao {
 
-	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Jiggs");
+	public boolean insertTrainee(Trainees trainee);
 
-	public boolean insertTrainee(Trainees trainee) {
-		boolean isInserted = false;
-		EntityManager manager = factory.createEntityManager();
-		EntityTransaction transaction = manager.getTransaction();
+	public Trainees fetchTrainee(int id);
 
-		try {
-			transaction.begin();
-			manager.persist(trainee);
-			transaction.commit();
-			isInserted = true;
-		} catch (Exception e) {
-			transaction.rollback();
-			e.printStackTrace();
-		}
+	Trainees authenticate(int userId, String password);
 
-		return isInserted;
-	}
+	public boolean deleteTrainee(int id);
 
+	public boolean updateTrainee(Trainees trainee);
+
+	public List<Trainees> getAllTrainees();
 }
